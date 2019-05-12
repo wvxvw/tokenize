@@ -8,3 +8,4 @@ author('Shon Feder', 'shon.feder@gmail.com').
 packager('Shon Feder', 'shon.feder@gmail.com').
 maintainer('Shon Feder', 'shon.feder@gmail.com').
 home('https://github.com/aBathologist/tokenize').
+requires(quickcheck).

@@ -22,6 +22,8 @@ main(_Argv) :-
    asserta(user:file_search_path(package, PackageDir)).
 
 :- use_module(package(tokenize)).
+:- use_module(library(quickcheck)).
+:- multifile quickcheck:arbitrary/2.
 
 % TESTS START HERE
 
@@ -38,5 +40,20 @@ test('Goodbye, Tokenize!',
     untokenize(Tokens, Codes),
     string_codes(Actual, Codes),
     Expected = "Goodbye, Tokenize!".
+
+quickcheck:arbitrary(ascii, X) :-
+    arbitrary(integer, I),
+    X is I mod 127.
+
+prop_reverse_twice(L:list(ascii)) :-
+    format('source: ~w~n', [L]),
+    tokenize(L, R),
+    format('tokenized: ~w~n', [R]),
+    untokenize(R, L0),
+    format('untokenized: ~w~n', [L0]),
+    L == L0.
+
+test(tokenize_ints) :-
+    quickcheck(prop_reverse_twice/1).
 
 :- end_tests(tokenize).
