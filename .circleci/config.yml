@@ -8,10 +8,10 @@ jobs:
     steps:
       - run:
           # TODO Build custom image to improve build time
-          name: Install git
+          name: Install Deps
           command: |
             apt update -y
-            apt install git -y
+            apt install git make -y
 
       - checkout
 
